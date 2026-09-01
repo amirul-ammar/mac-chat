@@ -84,6 +84,18 @@ find duplicate files in Documents
 what have I not opened in over a year?
 ```
 
+## Tests
+
+```bash
+.venv/bin/pip install -r requirements-dev.txt
+.venv/bin/python -m pytest tests/ -q
+```
+
+34 tests, concentrated on the parts that touch the disk: the path sandbox (symlink escapes,
+parent traversal, absolute system paths), the guarantee that staging never moves anything,
+that applying never overwrites, and that every operation can be undone. Each one runs against
+a throwaway root and an isolated database, so the suite can never reach your real files.
+
 ## Layout
 
 ```
@@ -96,6 +108,7 @@ macchat/tools.py     the seven tools the model can call
 macchat/schemas.py   tool definitions + system prompt
 macchat/ollama.py    local HTTP client
 macchat/cli.py       REPL, tool loop, approval prompts
+tests/               pytest suite, sandbox-focused
 ```
 
 Data lives in `~/.mac-chat/` (`index.db`, `config.json`).
@@ -108,3 +121,7 @@ works — switch with `/model` or `--model`.
 
 Note that an 8B model is solid at search and summarising but weaker at long multi-step
 reasoning. `/think on` trades speed for better results on harder requests.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
