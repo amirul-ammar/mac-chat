@@ -4,6 +4,12 @@ A chatbot that runs entirely on your Mac and can talk about — and tidy up — 
 No API keys, no network calls. The model is local (Ollama), the index is a local SQLite
 database, and every file it reads stays on the machine.
 
+![mac-chat finding duplicate files, then sorting a folder by type behind an approval prompt](assets/demo.gif)
+
+Above: finding duplicates, then sorting a folder — note that the sort is *staged*. mac-chat
+shows every operation and waits for a yes before touching anything, and `/undo` reverses the
+whole batch. (Recorded against a folder of throwaway sample files, not real ones.)
+
 ## Setup
 
 Requires macOS, Python 3.11+, and [Ollama](https://ollama.com).
