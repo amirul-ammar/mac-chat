@@ -1,0 +1,23 @@
+#!/bin/bash
+# mac-chat launcher — resolves its own location, so the repo can live anywhere
+# and be reached through a symlink on PATH.
+set -e
+
+SOURCE="${BASH_SOURCE[0]}"
+while [ -L "$SOURCE" ]; do
+  LINKDIR="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ $SOURCE != /* ]] && SOURCE="$LINKDIR/$SOURCE"
+done
+DIR="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+
+if [ ! -x "$DIR/.venv/bin/python" ]; then
+  echo "mac-chat: no virtualenv at $DIR/.venv" >&2
+  echo "Set one up with:" >&2
+  echo "  python3 -m venv \"$DIR/.venv\"" >&2
+  echo "  \"$DIR/.venv/bin/pip\" install -r \"$DIR/requirements.txt\"" >&2
+  exit 1
+fi
+
+export PYTHONPATH="$DIR${PYTHONPATH:+:$PYTHONPATH}"
+exec "$DIR/.venv/bin/python" -m macchat.cli "$@"

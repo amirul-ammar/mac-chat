@@ -1,0 +1,16 @@
+# Virtualenv — recreate with requirements.txt
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# macOS
+.DS_Store
+
+# Local index and config live in ~/.mac-chat, but ignore them here just in case
+*.db
+*.db-shm
+*.db-wal
+config.json
